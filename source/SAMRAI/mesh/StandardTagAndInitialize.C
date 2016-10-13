@@ -3,7 +3,7 @@
  * This file is part of the SAMRAI distribution.  For full copyright
  * information, see COPYRIGHT and COPYING.LESSER.
  *
- * Copyright:     (c) 1997-2015 Lawrence Livermore National Security, LLC
+ * Copyright:     (c) 1997-2016 Lawrence Livermore National Security, LLC
  * Description:   Routines for performing cell-tagging and initializing
  *                a new level.
  *
@@ -504,13 +504,13 @@ StandardTagAndInitialize::tagCellsUsingRichardsonExtrapolation(
       TBOX_ASSERT(ctags);
       TBOX_ASSERT(ctags->getDepth() == ftags->getDepth());
 
-      const hier::Index filo = ftags->getGhostBox().lower();
-      const hier::Index fihi = ftags->getGhostBox().upper();
-      const hier::Index cilo = ctags->getGhostBox().lower();
-      const hier::Index cihi = ctags->getGhostBox().upper();
+      const hier::Index& filo = ftags->getGhostBox().lower();
+      const hier::Index& fihi = ftags->getGhostBox().upper();
+      const hier::Index& cilo = ctags->getGhostBox().lower();
+      const hier::Index& cihi = ctags->getGhostBox().upper();
 
-      const hier::Index ifirstc = coarse_patch->getBox().lower();
-      const hier::Index ilastc = coarse_patch->getBox().upper();
+      const hier::Index& ifirstc = coarse_patch->getBox().lower();
+      const hier::Index& ilastc = coarse_patch->getBox().upper();
 
       for (int d = 0; d < ctags->getDepth(); ++d) {
          if (dim == tbox::Dimension(1)) {

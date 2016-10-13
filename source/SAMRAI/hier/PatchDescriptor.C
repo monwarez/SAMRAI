@@ -3,7 +3,7 @@
  * This file is part of the SAMRAI distribution.  For full copyright
  * information, see COPYRIGHT and COPYING.LESSER.
  *
- * Copyright:     (c) 1997-2015 Lawrence Livermore National Security, LLC
+ * Copyright:     (c) 1997-2016 Lawrence Livermore National Security, LLC
  * Description:   Factory class for patch data objects that live on a patch
  *
  ************************************************************************/
@@ -79,23 +79,27 @@ PatchDescriptor::definePatchDataComponent(
    TBOX_ASSERT(!name.empty());
    TBOX_ASSERT(factory);
 
-   int ret_index = INDEX_UNDEFINED;
    if (d_free_indices.empty()) {
-      TBOX_ERROR(
-         "PatchDescriptor::definePatchDataComponent error...\n"
-         << "No available patch data component indices left.\n"
-         << "Application must be restarted and size must be increased.\n"
-         << "See tbox::SAMRAIManager utility for more information."
-         << std::endl);
-   } else {
-      ret_index = d_free_indices.front();
-      d_free_indices.pop_front();
-      if (d_max_number_registered_components < ret_index + 1) {
-         d_max_number_registered_components = ret_index + 1;
+      int old_size = static_cast<int>(d_names.size());
+      int new_size = old_size +
+         tbox::SAMRAIManager::getMaxNumberPatchDataEntries();
+      TBOX_ASSERT(new_size > old_size);
+      d_names.resize(new_size);
+      d_factories.resize(new_size);
+      for (int i = old_size; i < new_size; ++i) {
+         d_free_indices.push_back(i);
       }
-      d_factories[ret_index] = factory;
-      d_names[ret_index] = name;
+      tbox::SAMRAIManager::setMaxNumberPatchDataEntries(new_size);
+   } 
+
+   int ret_index = d_free_indices.front();
+   d_free_indices.pop_front();
+   if (d_max_number_registered_components < ret_index + 1) {
+      d_max_number_registered_components = ret_index + 1;
    }
+   d_factories[ret_index] = factory;
+   d_names[ret_index] = name;
+
    return ret_index;
 }
 

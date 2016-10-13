@@ -3,7 +3,7 @@
  * This file is part of the SAMRAI distribution.  For full copyright
  * information, see COPYRIGHT and COPYING.LESSER.
  *
- * Copyright:     (c) 1997-2015 Lawrence Livermore National Security, LLC
+ * Copyright:     (c) 1997-2016 Lawrence Livermore National Security, LLC
  * Description:   Linear time interp operator for edge-centered double patch data.
  *
  ************************************************************************/
@@ -140,16 +140,16 @@ EdgeDoubleLinearTimeInterpolateOp::timeInterpolate(
    TBOX_ASSERT((where * dst_dat->getGhostBox()).isSpatiallyEqual(where));
    TBOX_ASSERT_OBJDIM_EQUALITY4(dst_data, where, src_data_old, src_data_new);
 
-   const hier::Index old_ilo = old_dat->getGhostBox().lower();
-   const hier::Index old_ihi = old_dat->getGhostBox().upper();
-   const hier::Index new_ilo = new_dat->getGhostBox().lower();
-   const hier::Index new_ihi = new_dat->getGhostBox().upper();
+   const hier::Index& old_ilo = old_dat->getGhostBox().lower();
+   const hier::Index& old_ihi = old_dat->getGhostBox().upper();
+   const hier::Index& new_ilo = new_dat->getGhostBox().lower();
+   const hier::Index& new_ihi = new_dat->getGhostBox().upper();
 
-   const hier::Index dst_ilo = dst_dat->getGhostBox().lower();
-   const hier::Index dst_ihi = dst_dat->getGhostBox().upper();
+   const hier::Index& dst_ilo = dst_dat->getGhostBox().lower();
+   const hier::Index& dst_ihi = dst_dat->getGhostBox().upper();
 
-   const hier::Index ifirst = where.lower();
-   const hier::Index ilast = where.upper();
+   const hier::Index& ifirst = where.lower();
+   const hier::Index& ilast = where.upper();
 
    const double old_time = old_dat->getTime();
    const double new_time = new_dat->getTime();

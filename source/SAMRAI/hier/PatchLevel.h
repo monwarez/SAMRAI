@@ -3,7 +3,7 @@
  * This file is part of the SAMRAI distribution.  For full copyright
  * information, see COPYRIGHT and COPYING.LESSER.
  *
- * Copyright:     (c) 1997-2015 Lawrence Livermore National Security, LLC
+ * Copyright:     (c) 1997-2016 Lawrence Livermore National Security, LLC
  * Description:   A collection of patches at one level of the AMR hierarchy
  *
  ************************************************************************/
@@ -784,7 +784,7 @@ public:
     *         (2) all of the patches have allocated the patch data component,
     *         otherwise false.
     *
-    * @param[in] id The patch identifier.
+    * @param[in] id The patch data identifier.
     */
    bool
    checkAllocated(
@@ -803,7 +803,7 @@ public:
     *
     * This component will need to be reallocated before its next use.
     *
-    * @param[in]  id The patch identifier
+    * @param[in]  id The patch data identifier
     */
    void
    deallocatePatchData(
