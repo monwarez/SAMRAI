@@ -1,0 +1,7 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Cflags: -I${includedir}
+Libs: -L${libdir} -lSAMRAI_appu -lSAMRAI_geom -lSAMRAI_solv -lSAMRAI_mesh -lSAMRAI_math -lSAMRAI_pdat -lSAMRAI_xfer -lSAMRAI_hier -lSAMRAI_tbox

@@ -1750,6 +1750,7 @@ CASC_AC_LOG_VAR(makefiles)
 CASC_AC_LOG_VAR(subdirs)
 $MKDIR_P $subdirs
 
+AC_CONFIG_FILES([samrai.pc])
 AC_OUTPUT([
 Makefile
 config/Makefile.config config/Makefile.config.install
