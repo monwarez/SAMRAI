@@ -8,6 +8,7 @@ set(SAMRAI_VERSION_PATCHLEVEL 1)
 set(SAMRAI_VERSION
   "${SAMRAI_VERSION_MAJOR}.${SAMRAI_VERSION_MINOR}.${SAMRAI_VERSION_PATCHLEVEL}")
 
+
 if (NOT EXISTS ${PROJECT_SOURCE_DIR}/blt/SetupBLT.cmake)
   message(FATAL_ERROR "The BLT submodule is not present. \
 If in the git repository, please run the following commands:\n \
@@ -52,33 +53,61 @@ add_subdirectory(tools)
 
 add_subdirectory(docs)
 
-export(TARGETS SAMRAI_algs SAMRAI_appu SAMRAI_geom SAMRAI_hier
-  SAMRAI_math SAMRAI_mesh SAMRAI_pdat SAMRAI_solv SAMRAI_tbox
-  SAMRAI_xfer
-  FILE ${CMAKE_CURRENT_BINARY_DIR}/SAMRAITargets.cmake
+
+include(CMakePackageConfigHelpers)
+
+write_basic_package_version_file(
+  "${CMAKE_CURRENT_BINARY_DIR}/SAMRAI/SAMRAIConfigVersion.cmake"
+  VERSION ${SAMRAI_VERSION}
+  COMPATIBILITY AnyNewerVersion
   )
 
-export(PACKAGE SAMRAI)
+export(EXPORT SAMRAITargets
+  FILE "${CMAKE_CURRENT_BINARY_DIR}/SAMRAI/SAMRAITargets.cmake")
 
-set(SAMRAI_MODULE "share/SAMRAI/cmake")
-file(RELATIVE_PATH REL_INCLUDE_DIR "${CMAKE_INSTALL_PREFIX}" "${CMAKE_INSTALL_PREFIX}/include")
+configure_file(cmake/SAMRAIConfig.cmake
+  "${CMAKE_CURRENT_BINARY_DIR}/SAMRAI/SAMRAIConfig.cmake"
+  COPY_ONLY)
 
-set(CONF_INCLUDE_DIRS "${CMAKE_INSTALL_PREFIX}/${REL_INCLUDE_DIR}")
-configure_file(SAMRAIConfig.cmake.in
-  "${CMAKE_CURRENT_BINARY_DIR}/SAMRAIConfig.cmake" @ONLY)
+set(ConfigPackageLocation ${LIBDIR}/cmake/SAMRAI)
 
-
-configure_file(SAMRAIConfigVersion.cmake.in
-  "${CMAKE_CURRENT_BINARY_DIR}/SAMRAIConfigVersion.cmake" @ONLY)
+install(EXPORT SAMRAITargets
+  FILE SAMRAITargets.cmake
+  DESTINATION ${ConfigPackageLocation})
 
 install(FILES
-  "${CMAKE_CURRENT_BINARY_DIR}/SAMRAIConfig.cmake"
-  "${CMAKE_CURRENT_BINARY_DIR}/SAMRAIConfigVersion.cmake"
-  DESTINATION ${CMAKE_INSTALL_PREFIX}/${SAMRAI_MODULE}
-  )
+  cmake/SAMRAIConfig.cmake
+  "${CMAKE_CURRENT_BINARY_DIR}/SAMRAI/SAMRAIConfigVersion.cmake"
+  DESTINATION ${ConfigPackageLocation}
+  COMPONENT Devel)
 
-install(EXPORT SAMRAITargets DESTINATION
-  ${CMAKE_INSTALL_PREFIX}/${SAMRAI_MODULE})
+# export(TARGETS SAMRAI_algs SAMRAI_appu SAMRAI_geom SAMRAI_hier
+#   SAMRAI_math SAMRAI_mesh SAMRAI_pdat SAMRAI_solv SAMRAI_tbox
+#   SAMRAI_xfer
+#   FILE SAMRAITargets.cmake
+#   )
+
+# export(PACKAGE SAMRAI)
+
+# set(SAMRAI_MODULE "share/SAMRAI/cmake")
+# file(RELATIVE_PATH REL_INCLUDE_DIR "${CMAKE_INSTALL_PREFIX}" "${CMAKE_INSTALL_PREFIX}/include")
+
+# set(CONF_INCLUDE_DIRS "${CMAKE_INSTALL_PREFIX}/${REL_INCLUDE_DIR}")
+# configure_file(SAMRAIConfig.cmake.in
+#   "${CMAKE_CURRENT_BINARY_DIR}/SAMRAIConfig.cmake" @ONLY)
+
+
+# configure_file(SAMRAIConfigVersion.cmake.in
+#   "${CMAKE_CURRENT_BINARY_DIR}/SAMRAIConfigVersion.cmake" @ONLY)
+
+# install(FILES
+#   "${CMAKE_CURRENT_BINARY_DIR}/SAMRAIConfig.cmake"
+#   "${CMAKE_CURRENT_BINARY_DIR}/SAMRAIConfigVersion.cmake"
+#   DESTINATION ${CMAKE_INSTALL_PREFIX}/${SAMRAI_MODULE}
+#   )
+
+# install(EXPORT SAMRAITargets DESTINATION
+#   ${CMAKE_INSTALL_PREFIX}/${SAMRAI_MODULE})
 
 install(DIRECTORY
   ${CMAKE_CURRENT_BINARY_DIR}/include/SAMRAI
