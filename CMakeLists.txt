@@ -56,36 +56,45 @@ add_subdirectory(docs)
 
 include(CMakePackageConfigHelpers)
 
+set(ConfigPackageLocation ${DATAROOTDIR}/SAMRAI/cmake)
+
+
+set(INCLUDE_INSTALL_DIR include/ CACHE  INTERNAL "Include install dir")
+set(SYSCONFIG_INSTALL_DIR etc/SAMRAI/  CACHE INTERNAL " etc install dir for SAMRAI")
+
+# configure_package_config_file(SAMRAIConfig.cmake.in
+#   "${CMAKE_CURRENT_BINARY_DIR}/SAMRAIConfig.cmake"
+#   INSTALL_DESTINATION ${ConfigPackageLocation})
+#  PATH_VARS ${INCLUDE_INSTALL_DIR} ${SYSCONFIG_INSTALL_DIR})
+
 write_basic_package_version_file(
-  "${CMAKE_CURRENT_BINARY_DIR}/SAMRAI/SAMRAIConfigVersion.cmake"
+  "${CMAKE_CURRENT_BINARY_DIR}/SAMRAIConfigVersion.cmake"
   VERSION ${SAMRAI_VERSION}
   COMPATIBILITY AnyNewerVersion
   )
 
-export(EXPORT SAMRAITargets
-  FILE "${CMAKE_CURRENT_BINARY_DIR}/SAMRAI/SAMRAITargets.cmake")
+# export(EXPORT SAMRAIConfig
+#   FILE "${CMAKE_CURRENT_BINARY_DIR}/SAMRAIConfig.cmake")
 
-configure_file(cmake/SAMRAIConfig.cmake
-  "${CMAKE_CURRENT_BINARY_DIR}/SAMRAI/SAMRAIConfig.cmake"
-  COPY_ONLY)
+# configure_file(cmake/SAMRAIConfig.cmake
+#   "${CMAKE_CURRENT_BINARY_DIR}/SAMRAI/SAMRAIConfig.cmake"
+#   COPYONLY)
 
-set(ConfigPackageLocation ${LIBDIR}/cmake/SAMRAI)
 
-install(EXPORT SAMRAITargets
-  FILE SAMRAITargets.cmake
+install(EXPORT SAMRAIConfig
+  FILE SAMRAIConfig.cmake
   DESTINATION ${ConfigPackageLocation})
 
 install(FILES
-  cmake/SAMRAIConfig.cmake
-  "${CMAKE_CURRENT_BINARY_DIR}/SAMRAI/SAMRAIConfigVersion.cmake"
+  "${CMAKE_CURRENT_BINARY_DIR}/SAMRAIConfigVersion.cmake"
   DESTINATION ${ConfigPackageLocation}
   COMPONENT Devel)
 
-# export(TARGETS SAMRAI_algs SAMRAI_appu SAMRAI_geom SAMRAI_hier
-#   SAMRAI_math SAMRAI_mesh SAMRAI_pdat SAMRAI_solv SAMRAI_tbox
-#   SAMRAI_xfer
-#   FILE SAMRAITargets.cmake
-#   )
+export(TARGETS SAMRAI_algs SAMRAI_appu SAMRAI_geom SAMRAI_hier
+  SAMRAI_math SAMRAI_mesh SAMRAI_pdat SAMRAI_solv SAMRAI_tbox
+  SAMRAI_xfer
+  FILE SAMRAIConfig.cmake
+  )
 
 # export(PACKAGE SAMRAI)
 
