@@ -167,6 +167,7 @@ blt_add_library(
 target_include_directories( SAMRAI_math
   PUBLIC
   $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/source>
+  $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include>
   $<INSTALL_INTERFACE:include>)
 
 install(TARGETS SAMRAI_math

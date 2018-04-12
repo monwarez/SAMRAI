@@ -130,6 +130,7 @@ blt_add_library( NAME SAMRAI_tbox
 target_include_directories( SAMRAI_tbox
   PUBLIC
   $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/source>
+  $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include>
   $<INSTALL_INTERFACE:include>)
 
 install(TARGETS SAMRAI_tbox

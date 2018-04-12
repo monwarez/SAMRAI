@@ -45,6 +45,7 @@ set_target_properties(SAMRAI_appu PROPERTIES LINKER_LANGUAGE CXX)
 target_include_directories( SAMRAI_appu
   PUBLIC
   $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/source>
+  $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include>
   $<INSTALL_INTERFACE:include>)
 
 install(TARGETS SAMRAI_appu

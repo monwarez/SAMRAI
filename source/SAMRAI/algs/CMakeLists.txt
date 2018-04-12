@@ -59,6 +59,7 @@ set_target_properties(SAMRAI_algs PROPERTIES LINKER_LANGUAGE CXX)
 target_include_directories( SAMRAI_algs
   PUBLIC
   $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/source>
+  $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include>
   $<INSTALL_INTERFACE:include>)
 
 install(TARGETS SAMRAI_algs
