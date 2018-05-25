@@ -68,7 +68,6 @@ class DeviceManager
 private:
    static void initializeCallback()
    {
-#if 0
       const tbox::SAMRAI_MPI& mpi(tbox::SAMRAI_MPI::getSAMRAIWorld());
       if (mpi.getSize() < 2) return;
 
@@ -87,7 +86,6 @@ private:
       const int my_device = local_rank % num_devices;
       cudaSetDevice(my_device);
       std::cout << "My device = " << my_device << std::endl;
-#endif
    }
 
    static void finalizeCallback()
